@@ -7,6 +7,7 @@ import Button from 'components/Button'
 import { useCallback, useEffect } from 'react'
 import instance from 'utils/config/api'
 import { addCattegories } from 'store/reducers/categorias'
+import { addItens } from 'store/reducers/itens'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -17,9 +18,16 @@ export default function Home() {
     dispatch(addCattegories(response.data))
   }, [dispatch])
 
+  const searchItens = useCallback(async () => {
+    const response = await instance.get('/itens')
+
+    dispatch(addItens(response.data))
+  }, [dispatch])
+
   useEffect(() => {
     searchCattegories()
-  }, [searchCattegories])
+    searchItens()
+  }, [searchCattegories, searchItens])
 
   const navigate = useNavigate()
   const categorias = useSelector((state) => state.categorias)
