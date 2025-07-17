@@ -6,17 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from 'components/Button'
 import { useCallback, useEffect } from 'react'
 import instance from 'utils/config/api'
-import { addCattegories } from 'store/reducers/categorias'
 import { addItens } from 'store/reducers/itens'
+import { searchCategory } from 'store/reducers/categorias'
 
 export default function Home() {
   const dispatch = useDispatch()
-
-  const searchCattegories = useCallback(async () => {
-    const response = await instance.get('/categorias')
-
-    dispatch(addCattegories(response.data))
-  }, [dispatch])
+  const navigate = useNavigate()
+  const categorias = useSelector((state) => state.categorias)
 
   const searchItens = useCallback(async () => {
     const response = await instance.get('/itens')
@@ -25,12 +21,9 @@ export default function Home() {
   }, [dispatch])
 
   useEffect(() => {
-    searchCattegories()
-    searchItens()
-  }, [searchCattegories, searchItens])
+    dispatch(searchCategory())
+  }, [dispatch, searchItens])
 
-  const navigate = useNavigate()
-  const categorias = useSelector((state) => state.categorias)
   return (
     <div>
       <Header
