@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import serviceItens from 'services/itens'
 import { v4 as uuid } from 'uuid'
 
-const initialState = []
+export const searchItens = createAsyncThunk('itens/buscar', serviceItens.search)
 
 const itensSlice = createSlice({
   name: 'itens',
@@ -27,6 +28,11 @@ const itensSlice = createSlice({
     addItens: (state, { payload }) => {
       state.push(...payload)
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(searchItens.fulfilled, (state, { payload }) => {
+      state.push(...payload)
+    })
   },
 })
 
