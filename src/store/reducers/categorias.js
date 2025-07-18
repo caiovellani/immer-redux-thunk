@@ -1,6 +1,7 @@
 import { createStandaloneToast } from '@chakra-ui/toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import categoryServices from 'services/categorias'
+import { resetarCarrinho } from 'store/reducers/carrinho'
 
 const { toast } = createStandaloneToast()
 
@@ -45,6 +46,15 @@ const categorySlice = createSlice({
           status: 'error',
         })
         console.log('busca de categoria rejeitada.')
+      })
+      .addCase(resetarCarrinho.type, () => {
+        toast({
+          title: 'sucesso!',
+          description: 'Compra aprovada com sucesso!',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        })
       })
   },
 })
