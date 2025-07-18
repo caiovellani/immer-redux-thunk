@@ -11,18 +11,11 @@ export const searchCategory = createAsyncThunk(
 const categorySlice = createSlice({
   name: 'categorias',
   initialState,
-  reducers: {
-    addCategory: (state, { payload }) => {
-      state.push(...payload)
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(searchCategory.fulfilled, (state, { payload }) => {
-      state.push(...payload)
+      return payload
     })
   },
 })
-
-export const { addCategory } = categorySlice.actions
 
 export default categorySlice.reducer
